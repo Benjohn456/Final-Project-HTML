@@ -1,9 +1,118 @@
 <html>
-    <head>
-        <link rel="stylesheet" href="styles.css">
-    </head>
-    <body>
+<head>
+<meta charset="UTF-8">
+<title>My Text Adventure</title>
+<style>
+  body {
+    margin: 0;
+    height: 100vh;
+    background: #000;
+    color: rgb(192, 192, 192);
+    font-family: 'Times New Roman', monospace;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: radial-gradient(circle at center, #001100, #000);
+  }
+
+  #title-screen {
+    text-align: center;
+    animation: fadeIn 2s ease-in;
+  }
+
+  h1 {
+    font-size: 4rem;
+    margin: 0;
+    letter-spacing: 0.5rem;
+    text-shadow: 0 0 20px rgb(76, 0, 255);
+    animation: glow 2s infinite alternate;
+  }
+
+  p.subtitle {
+    font-size: 1.3rem;
+    margin: 2rem 0;
+    opacity: 0.8;
+    animation: fadeIn 3s ease-in;
+  }
+
+  .press-any-key {
+    margin-top: 4rem;
+    font-size: 1.2rem;
+    opacity: 0;
+    animation: blink 1.5s infinite, fadeIn 1s 2s forwards;
+  }
+
+  @keyframes glow {
+    from { text-shadow: 0 0 10px #8c00ff; }
+    to   { text-shadow: 0 0 30px #8c00ff, 0 0 50px #8c00ff; }
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes blink {
+    0%, 100% { opacity: 0.4; }
+    50% { opacity: 1; }
+  }
+
+  #game { display: none; }
+</style>
+</head>
+<body>
+
+<div id="title-screen">
+  <h1>The Silver Lining</h1>
+  <p class="subtitle">A text adventure by Charles Johnston · 2025</p>
+  <div class="press-any-key">► Press any key to begin ◄</div>
+</div>
+
+<div id="game">
+  <pre id="output"></pre>
+  <div>> <input type="text" id="input" autofocus autocomplete="off"></div>
+</div>
+
+<script>
+  const titleScreen = document.getElementById('title-screen');
+  const game = document.getElementById('game');
+
+  
+  document.body.addEventListener('keydown', startGame);
+  document.body.addEventListener('click', startGame);
+  document.body.addEventListener('touchstart', startGame);
+
+  function startGame(e) {
     
-        <script type="module" src="code.js"></script>
-    </body>
+    document.body.removeEventListener('keydown', startGame);
+    document.body.removeEventListener('click', startGame);
+    document.body.removeEventListener('touchstart', startGame);
+
+    titleScreen.style.animation = 'fadeOut 1s forwards';
+    setTimeout(() => {
+      titleScreen.style.display = 'none';
+      game.style.display = 'block';
+     
+      initGame();
+    }, 1000);
+  }
+
+  
+  const style = document.createElement('style');
+  style.textContent = `
+    @keyframes fadeOut {
+      from { opacity: 1; }
+      to   { opacity: 0; transform: scale(0.95); }
+    }
+  `;
+  document.head.appendChild(style);
+
+  function initGame() {
+    document.getElementById('output').textContent = "Welcome.\n\nYou wake up in the tavern known as The Lucky Maiden.\n\n After a drunken night out.. Do you remember your name?";
+    document.getElementById('input').focus();
+    
+  }
+</script>
+</body>
 </html>
