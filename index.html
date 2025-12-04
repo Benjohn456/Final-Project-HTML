@@ -1,5 +1,7 @@
 <html>
 <head>
+  <script type="module" src="code.js"></script>
+  <script type="module" src="hero.js"></script>
 <meta charset="UTF-8">
 <title>My Text Adventure</title>
 <style>
@@ -77,14 +79,15 @@
 <script>
   const titleScreen = document.getElementById('title-screen');
   const game = document.getElementById('game');
+  const output = document.getElementById('output');
+  const input = document.getElementById('input');
+  let playerName = '';  // Variable to store the player's name
 
-  
   document.body.addEventListener('keydown', startGame);
   document.body.addEventListener('click', startGame);
   document.body.addEventListener('touchstart', startGame);
 
   function startGame(e) {
-    
     document.body.removeEventListener('keydown', startGame);
     document.body.removeEventListener('click', startGame);
     document.body.removeEventListener('touchstart', startGame);
@@ -93,12 +96,10 @@
     setTimeout(() => {
       titleScreen.style.display = 'none';
       game.style.display = 'block';
-     
       initGame();
     }, 1000);
   }
 
-  
   const style = document.createElement('style');
   style.textContent = `
     @keyframes fadeOut {
@@ -107,17 +108,42 @@
     }
   `;
   document.head.appendChild(style);
-  
 
   function initGame() {
-    
-    document.getElementById('output').textContent = "Welcome.\n\nYou wake up in the tavern known as The Lucky Maiden.\n\n After a drunken night out.. Do you remember your name?";
-    document.getElementById('input').focus();
-    
+    output.textContent = "Welcome.\n\nYou wake up in the tavern known as The Lucky Maiden.\n\nAfter a drunken night out... Do you remember your name?";
+    input.focus();
+    input.addEventListener('keypress', handleInput);  // Listen for Enter key
   }
 
-  
+  function handleInput(e) {
+    if (e.key === 'Enter') {
+      const userInput = input.value.trim();
+      if (userInput === '') {
+        output.textContent += '\n\nPlease enter your name.';
+        input.value = '';
+        return;
+      }
+
+      
+      playerName = userInput;
+      advanceStory();
+    }
+  }
+
+  function advanceStory() {
+    
+    input.value = '';
+
+    
+    output.textContent += `\n\nAh, yes, ${playerName}. That's right.\n\nYour head is killing you from the night out and you're having a hard time remembering a few things about yourself.\n\n Were you a warrior, rogue, or mage type of combatant?`;
+    
+    
+    
+    input.focus();
+    
+    // You can add more logic here for further inputs, like checking commands
+    // e.g., if (userInput.toLowerCase() === 'talk to bartender') { ... }
+  }
 </script>
-<li><a href="../Final-Project-HTML/game.html"></a></li>
 </body>
 </html>
