@@ -73,14 +73,14 @@
 
 <div id="game">
   <pre id="output"></pre>
-  <div>> <input type="text" id="input" autofocus autocomplete="off"></div>
+  <div>></div>
 </div>
 
 <script>
-  const titleScreen = document.getElementById('title-screen');
-  const game = document.getElementById('game');
-  const output = document.getElementById('output');
-  const input = document.getElementById('input');
+  let titleScreen = document.getElementById('title-screen');
+  let game = document.getElementById('game');
+  let output = document.getElementById('output');
+  let input = document.getElementById('input');
   let playerName = '';  // Variable to store the player's name
 
   document.body.addEventListener('keydown', startGame);
@@ -110,40 +110,13 @@
   document.head.appendChild(style);
 
   function initGame() {
-    output.textContent = "Welcome.\n\nYou wake up in the tavern known as The Lucky Maiden.\n\nAfter a drunken night out... Do you remember your name?";
-    input.focus();
-    input.addEventListener('keypress', handleInput);  // Listen for Enter key
+    output.textContent = "Welcome.\n\nYou wake up in the tavern known as The Lucky Maiden.\n\nAfter a drunken night out you wake up to the local bartander cleaning the bartop and some steins.";
+    
   }
 
-  function handleInput(e) {
-    if (e.key === 'Enter') {
-      const userInput = input.value.trim();
-      if (userInput === '') {
-        output.textContent += '\n\nPlease enter your name.';
-        input.value = '';
-        return;
-      }
+  
 
-      
-      playerName = userInput;
-      advanceStory();
-    }
-  }
 
-  function advanceStory() {
-    
-    input.value = '';
-
-    
-    output.textContent += `\n\nAh, yes, ${playerName}. That's right.\n\nYour head is killing you from the night out and you're having a hard time remembering a few things about yourself.\n\n Were you a warrior, rogue, or mage type of combatant?`;
-    
-    
-    
-    input.focus();
-    
-    // You can add more logic here for further inputs, like checking commands
-    // e.g., if (userInput.toLowerCase() === 'talk to bartender') { ... }
-  }
 </script>
 </body>
 </html>
